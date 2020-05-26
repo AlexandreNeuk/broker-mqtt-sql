@@ -30,6 +30,26 @@ app.get('/', function (req, res) {
   res.send('Broker version 1.0')
 })
 
+app.get('/carregar', function (req, res) {
+  //
+  if (req.params.id_machine && req.params.recipes && req.params.topic) {
+    try {
+      publishMetadata() 
+    } catch (error) {
+      res.send(500, 'Error: ', error)  
+    }
+  }
+  else {
+    res.send(200, 'Parameters error!')  
+  }
+  //
+  res.send(200, 'Send data sucessfull!')
+})
+
+function publishMetadata(topic, metaData) {
+  client.publish(topic, metaData);
+}
+
 app.listen(3000, function () {
   //
   console.log('Broker started on port 3000!');
@@ -46,10 +66,6 @@ client.on('message', function(topic, message, packet) {
   //
   saveData(packet.payload.toString('utf-8'))
 })
-
-function publishMetadata(topic, metaData) {
-  client.publish(topic, metaData);
-}
 
 async function saveData (val) {
   //
