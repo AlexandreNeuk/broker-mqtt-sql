@@ -1,9 +1,11 @@
 var mqtt = require('mqtt')
 const sql = require('mssql')
 var express = require('express')
+var cors = require('cors')
 const bodyParser = require('body-parser')
 
 var app = express()
+app.use(cors())
 app.use(bodyParser.urlencoded({ extended: true }));
 app.use(bodyParser.json());
 app.use(bodyParser.raw());
@@ -40,172 +42,33 @@ app.post('/carregar', function (req, res) {
   let publish_success = false
   //  
   try {
-    
-    console.log('req.body ', req.body);
+   //console.log('req', req.body.topics.length)
+   if (req.body.topico && req.body.mensagem) {
     //
-    /*
-    let message = { 
-      "MAQUINA":"20", 
-      "RECEITA_ID": "17",
-      "PASSOS_LAVAGEM": {
-        "PASSO1" : {
-          "Tipo" : "Lavagem",
-          "TipoCode" : "01",          
-          "ModoTrabalho" : "1",
-          "TempoOperacao" : "2",
-          "TempoReversao" : "3",
-          "RPM" : "500",
-          "Temperatura" : "37",
-          "SemVapor" : "True",
-          "Entrada" : "AA",
-          "Nivel" : "75",
-          "Saida" : "BB",
-          "ProdutoA" : "ProdutoA",
-          "ValorA" : "ValorA",
-          "ProdutoB" : "ProdutoB",
-          "ValorB" : "ValorB",
-          "ProdutoC" : "ProdutoC",
-          "ValorC" : "ValorC",
-          "ProdutoD" : "ProdutoD",
-          "ValorD" : "ValorD",
-          "ProdutoE" : "ProdutoE",
-          "ValorE" : "ValorE",
-          "ProdutoF" : "ProdutoF",
-          "ValorF" : "ValorF",
-          "ProdutoG" : "ProdutoG",
-          "ValorG" : "ValorG"
-        },
-        "PASSO2" : {
-          "Tipo" : "Lavagem",
-          "TipoCode" : "01",          
-          "ModoTrabalho" : "3",
-          "TempoOperacao" : "4",
-          "TempoReversao" : "6",
-          "RPM" : "700",
-          "Temperatura" : "40",
-          "SemVapor" : "False",
-          "Entrada" : "AA",
-          "Nivel" : "75",
-          "Saida" : "BB",
-          "ProdutoA" : "ProdutoA",
-          "ValorA" : "ValorA",
-          "ProdutoB" : "ProdutoB",
-          "ValorB" : "ValorB",
-          "ProdutoC" : "ProdutoC",
-          "ValorC" : "ValorC",
-          "ProdutoD" : "ProdutoD",
-          "ValorD" : "ValorD",
-          "ProdutoE" : "ProdutoE",
-          "ValorE" : "ValorE",
-          "ProdutoF" : "ProdutoF",
-          "ValorF" : "ValorF",
-          "ProdutoG" : "ProdutoG",
-          "ValorG" : "ValorG"
-        },
-        "PASSO3" : {
-          "Tipo" : "Lavagem",
-          "TipoCode" : "01",
-          "ModoTrabalho" : "12",
-          "TempoOperacao" : "6",
-          "TempoReversao" : "2",
-          "RPM" : "800",
-          "Temperatura" : "40",
-          "SemVapor" : "False",
-          "Entrada" : "AA",
-          "Nivel" : "75",
-          "Saida" : "BB",
-          "ProdutoA" : "ProdutoA",
-          "ValorA" : "ValorA",
-          "ProdutoB" : "ProdutoB",
-          "ValorB" : "ValorB",
-          "ProdutoC" : "ProdutoC",
-          "ValorC" : "ValorC",
-          "ProdutoD" : "ProdutoD",
-          "ValorD" : "ValorD",
-          "ProdutoE" : "ProdutoE",
-          "ValorE" : "ValorE",
-          "ProdutoF" : "ProdutoF",
-          "ValorF" : "ValorF",
-          "ProdutoG" : "ProdutoG",
-          "ValorG" : "ValorG"
-        },
-        "PASSO4" : {
-          "Tipo" : "Centrifugacao",
-          "TipoCode" : "02",          
-          "ModoTrabalho" : "5",
-          "Saida" : "AA",
-          "Velocidade1" : "500",
-          "Tempo1" : "20",
-          "Velocidade2" : "600",
-          "Tempo2" : "40",
-          "Velocidade3" : "400",
-          "Tempo3" : "60",
-          "Velocidade4" : "300",
-          "Tempo4" : "10",
-          "Velocidade5" : "200",
-          "Tempo5" : "70",
-        },
-        "PASSO5" : {
-          "Tipo" : "Centrifugacao",
-          "TipoCode" : "02",          
-          "ModoTrabalho" : "15",
-          "Saida" : "BB",
-          "Velocidade1" : "44",
-          "Tempo1" : "44",
-          "Velocidade2" : "868",
-          "Tempo2" : "67",
-          "Velocidade3" : "424",
-          "Tempo3" : "60",
-          "Velocidade4" : "300",
-          "Tempo4" : "12",
-          "Velocidade5" : "150",
-          "Tempo5" : "70",
-        },
-        "PASSO6" : {
-          "Tipo" : "Centrifugacao",
-          "TipoCode" : "02",          
-          "ModoTrabalho" : "518",
-          "Saida" : "CC",
-          "Velocidade1" : "55",
-          "Tempo1" : "20",
-          "Velocidade2" : "77",
-          "Tempo2" : "40",
-          "Velocidade3" : "33",
-          "Tempo3" : "60",
-          "Velocidade4" : "300",
-          "Tempo4" : "10",
-          "Velocidade5" : "200",
-          "Tempo5" : "70",
-        }   
-      }
-    }
-    */
-   //
-   if (req.body.topic && req.body.recipes) {
-    let recipes = JSON.stringify(req.body.recipes);
-    console.log("topic: ", req.body.topic)
-    publish_success = publishMetadata(req.body.topic, recipes) 
+    publish_success = publishMetadata(req.body.topico, req.body.mensagem) 
+    //console.group('Daat Hora: ', new Date().toISOString())
+    console.log('Daat Hora: ', new Date().toISOString())
+    console.log('Enviado: ', req.body.topico, ' - ', req.body.mensagem)
    }
    else {
-    res.status(500).send("Invalid Parameters")
+    publish_success = 'topicomensagem'
    }
   } catch (error) {
     console.log('ERROR (carregar) ', error);
     res.send(500, 'ERROR (carregar)', error)  
   }
   //
-  if (publish_success) {
-    res.status(200).send("OK")
-  }
-  else {
-    res.status(200).send("NOK")
-  }  
+  res.status(200).send({publish_success, 'id': req.body.id})
 })
 
 function publishMetadata(topic, metaData) {
   try {
-    console.log('topic: ', topic, ' - metaData: ', metaData)
+    //console.log('topic: ', topic, ' - metaData: ', metaData)
     client.publish(topic, metaData);
+
+    //client.publish("test", metaData);
+    //client.publish("test2", metaData);
+
   } catch (error) {
     console.log('Error Broker (publishMetadata) : ', error);
     return false
@@ -257,7 +120,7 @@ async function saveData (val) {
 
   } catch (err) {
       console.log('SQL Error (saveData) : ', err)
-  } 
+  }
 }
 
 sql.on('error', err => {
