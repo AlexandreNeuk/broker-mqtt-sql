@@ -34,7 +34,7 @@ const sql_config = {
 
 app.get('/', function (req, res) {
   //
-  res.send('Broker version 1.0')
+  res.send('Broker version 1.1')
 })
 
 app.post('/carregar', function (req, res) {
@@ -58,17 +58,13 @@ app.post('/carregar', function (req, res) {
     res.send(500, 'ERROR (carregar)', error)  
   }
   //
-  res.status(200).send({publish_success, 'id': req.body.id})
+  res.status(200).send({publish_success, 'id': req.body.id, 'indice': req.body.indice})
 })
 
 function publishMetadata(topic, metaData) {
   try {
     //console.log('topic: ', topic, ' - metaData: ', metaData)
     client.publish(topic, metaData);
-
-    //client.publish("test", metaData);
-    //client.publish("test2", metaData);
-
   } catch (error) {
     console.log('Error Broker (publishMetadata) : ', error);
     return false
@@ -90,31 +86,35 @@ client.subscribe('test')
 
 client.on('message', function(topic, message, packet) {
   //
-  //console.log('messsage: ', topic)
-  //saveData(packet.payload.toString('utf-8'))
+  saveData(packet.payload.toString('utf-8'))
 })
 
 async function saveData (val) {
   //
   try {
     //
+    let jsonData = JSON.parse(val)    
     let pool = await sql.connect(sql_config)
     const request = pool.request()
-    request.input('Id_ColetorTopico', sql.Int, 1)
     //
     var nDate = new Date().toLocaleString({
         timeZone: 'America/Sao_Paulo'
     })
     //
-    request.input('DataHora', sql.DateTime, nDate)
-    request.input('Valor', sql.VarChar, val)
-    //nDate.setHours(nDate.getHours()+1);
-    //insert into programa (Id_Empresa, Descricao) values (17, 'Haaaa')
-    //insert into ColetorTopicoLog (Id_ColetorTopico, DataHora, Valor) values ()
+    request.input('Id_Maquina', sql.Int, jsonData.idmaquna)
+    request.input('DataHora', sql.DateTime, nDate)    
+    request.input('Kilos', sql.VarChar, jsonData.kilos)
+    request.input('Programa', sql.VarChar, jsonData.programa)
+    request.input('NumeroCiclo', sql.VarChar, jsonData.numerociclo)
+    request.input('Temperatura', sql.VarChar, jsonData.temperatura)
+    request.input('Status', sql.VarChar, jsonData.status)
+    request.input('Consumo', sql.VarChar, jsonData.consumo)
     //
-    //console.log('Teste insert log - ', date_ob)
-    request.query('insert into ColetorTopicoLog (Id_ColetorTopico, DataHora, Valor) values (@Id_ColetorTopico, @DataHora, @Valor)', (err, result) => {
-        //console.log('HHHHHHHHHHHHHHA', result)
+    let strSql = 'insert into MaquinaLog (Id_Maquina, DataHora, Kilos, Programa, NumeroCiclo, Temperatura, Status, Cosumo) ' + 
+                'values (@Id_Maquina, @DataHora, @Kilos, @Programa, @NumeroCiclo, @Temperatura, @Status, @Cosumo)'
+
+    request.query(strSql, (err, result) => {
+        //
         console.log("Registro inserido");
     })
 
