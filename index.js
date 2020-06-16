@@ -1,6 +1,7 @@
 var mqtt = require('mqtt')
 const sql = require('mssql')
 var express = require('express')
+const storage = require('node-sessionstorage')
 var cors = require('cors')
 const bodyParser = require('body-parser')
 
@@ -30,6 +31,14 @@ const sql_config = {
     "encrypt": true,
     "enableArithAbort": true
     }
+}
+
+
+const getNormalizeDate = async () => {
+  var date = new Date()
+  var userTimezoneOffset = date.getTimezoneOffset() * 60000
+  date = new Date(date.getTime() - userTimezoneOffset)   
+  return date
 }
 
 app.get('/', function (req, res) {
@@ -82,42 +91,68 @@ client.on('connect', function(){
   console.log('Mqtt Connected!')
 })
 
-client.subscribe('test')
+client.subscribe('maq1')
+client.subscribe('maq2')
+client.subscribe('maq3')
 
 client.on('message', function(topic, message, packet) {
   //
-  saveData(packet.payload.toString('utf-8'))
+  switch (topic) {
+    case 'maq1':
+      saveData(packet.payload.toString('utf-8'), 'maq1')
+      break;
+    case 'maq2':
+      saveData(packet.payload.toString('utf-8'), 'maq2')
+      break;
+    case 'maq3':
+      saveData(packet.payload.toString('utf-8'), 'maq3')
+      break;
+  }
 })
 
-async function saveData (val) {
+async function saveData(val, idMaquina) {
   //
   try {
     //
-    let jsonData = JSON.parse(val)    
+    /* 
+    Se status = 0, então máquina parada
+    Se status = 1, então máquina rodando
+    Se status = 2, Salva dados de processo no banco
+    Se status = 3, então máquina falha   
+    */
+    let jsonData = JSON.parse(val.replace('maq1', ''))
+    //
     let pool = await sql.connect(sql_config)
     const request = pool.request()
-    //
-    var nDate = new Date().toLocaleString({
-        timeZone: 'America/Sao_Paulo'
-    })
-    //
-    request.input('Id_Maquina', sql.Int, jsonData.idmaquna)
-    request.input('DataHora', sql.DateTime, nDate)    
-    request.input('Kilos', sql.VarChar, jsonData.kilos)
-    request.input('Programa', sql.VarChar, jsonData.programa)
-    request.input('NumeroCiclo', sql.VarChar, jsonData.numerociclo)
-    request.input('Temperatura', sql.VarChar, jsonData.temperatura)
-    request.input('Status', sql.VarChar, jsonData.status)
-    request.input('Consumo', sql.VarChar, jsonData.consumo)
-    //
-    let strSql = 'insert into MaquinaLog (Id_Maquina, DataHora, Kilos, Programa, NumeroCiclo, Temperatura, Status, Cosumo) ' + 
-                'values (@Id_Maquina, @DataHora, @Kilos, @Programa, @NumeroCiclo, @Temperatura, @Status, @Cosumo)'
 
+    //console.log('etste: ', )
+    var nDate = new Date().toLocaleString({ timeZone: 'America/Sao_Paulo' })
+    //
+    request.input('Id_Maquina', sql.Int, 1)
+    request.input('DataHora', sql.DateTime, await getNormalizeDate())    
+    request.input('Kilos', sql.VarChar, jsonData.MQTT_PRODUCAO_ROUPA)
+    request.input('Programa', sql.VarChar, jsonData.MQTT_PROGRAMA_EXECUTADO)
+    request.input('NumeroCiclo', sql.VarChar, jsonData.MQTT_NUMERO_DE_CICLOS)
+    request.input('Temperatura', sql.VarChar, jsonData.MQTT_TEMPERATURA)
+    request.input('Status', sql.VarChar, jsonData.MQTT_STATUS)
+    request.input('Consumo', sql.VarChar, jsonData.MQTT_CONSUMO)
+    request.input('TempoTrabalhando', sql.VarChar, jsonData.MQTT_TEMPO_MAQUINA_TRABALHANDO)
+    request.input('TempoParada', sql.VarChar, jsonData.MQTT_TEMPO_MAQUINA_PARADA)
+    request.input('TempoFalha', sql.VarChar, jsonData.MQTT_TEMPO_MAQUINA_FALHA)
+    request.input('TempoReserva1', sql.VarChar, jsonData.MQTT_TEMPO_MAQUINA_RESERVA1)
+    request.input('TempoReserva2', sql.VarChar, jsonData.MQTT_TEMPO_MAQUINA_RESERVA2)
+    request.input('TempoReserva3', sql.VarChar, jsonData.MQTT_TEMPO_MAQUINA_RESERVA3)
+    //
+    let strSql = 'insert into MaquinaLog (Id_Maquina, DataHora, Kilos, Programa, NumeroCiclo, Temperatura, Status, Consumo, ' + 
+                 'TempoTrabalhando, TempoParada, TempoFalha, TempoReserva1, TempoReserva2, TempoReserva3) ' + 
+                 'values (@Id_Maquina, @DataHora, @Kilos, @Programa, @NumeroCiclo, @Temperatura, @Status, @Consumo, ' + 
+                 '@TempoTrabalhando, @TempoParada, @TempoFalha, @TempoReserva1, @TempoReserva2, @TempoReserva3);'
+    //
     request.query(strSql, (err, result) => {
         //
-        console.log("Registro inserido");
+       console.log("Registro inserido");
     })
-
+    
   } catch (err) {
       console.log('SQL Error (saveData) : ', err)
   }
