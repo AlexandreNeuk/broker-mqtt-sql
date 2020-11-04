@@ -33,14 +33,6 @@ const sql_config = {
     }
 }
 
-
-const getNormalizeDate = async () => {
-  var date = new Date()
-  var userTimezoneOffset = date.getTimezoneOffset() * 60000
-  date = new Date(date.getTime() - userTimezoneOffset)   
-  return date
-}
-
 app.get('/', function (req, res) {
   //
   res.send('Broker version 1.1')
@@ -51,13 +43,10 @@ app.post('/carregar', function (req, res) {
   let publish_success = false
   //  
   try {
-   //console.log('req', req.body.topics.length)
    if (req.body.topico && req.body.mensagem) {
     //
     publish_success = publishMetadata(req.body.topico, req.body.mensagem) 
-    //console.group('Daat Hora: ', new Date().toISOString())
-    console.log('Daat Hora: ', new Date().toISOString())
-    console.log('Enviado: ', req.body.topico, ' - ', req.body.mensagem)
+    console.log('carregar - Enviado: ', req.body.topico, ' - ', req.body.mensagem)
    }
    else {
     publish_success = 'topicomensagem'
@@ -67,19 +56,36 @@ app.post('/carregar', function (req, res) {
     res.send(500, 'ERROR (carregar)', error)  
   }
   //
-  res.status(200).send({publish_success, 'id': req.body.id, 'indice': req.body.indice})
+  res.status(200).send({
+    publish_success, 
+    'id': req.body.id, 
+    'indice': req.body.indice, 
+    'topico' : req.body.topico, 
+    'maquina_topico' : req.body.maquina_topico,
+    'receita' : req.body.receita
+  })
 })
 
-function publishMetadata(topic, metaData) {
+app.post('/passocomando', function (req, res) {
+  //
+  let publish_success = false
+  //  
   try {
-    //console.log('topic: ', topic, ' - metaData: ', metaData)
-    client.publish(topic, metaData);
+   if (req.body.topico && req.body.mensagem) {
+    //
+    publish_success = publishMetadata(req.body.topico, req.body.mensagem) 
+    console.log('passocomando - Data Hora: ', new Date().toISOString(), ' - ', req.body.mensagem)
+   }
+   else {
+    publish_success = 'topicomensagem'
+   }
   } catch (error) {
-    console.log('Error Broker (publishMetadata) : ', error);
-    return false
+    console.log('ERROR (carregar) ', error);
+    res.send(500, 'ERROR (carregar)', error)  
   }
-  return true
-}
+  //
+  res.status(200).send({publish_success, 'receita': req.body.receita})
+})
 
 app.listen(3000, function () {
   //
@@ -94,65 +100,142 @@ client.on('connect', function(){
 client.subscribe('maq1')
 client.subscribe('maq2')
 client.subscribe('maq3')
+client.subscribe('consumo')
 
-client.on('message', function(topic, message, packet) {
+client.on('message', async function(topic, message, packet) {
   //
-  switch (topic) {
-    case 'maq1':
-      saveData(packet.payload.toString('utf-8'), 'maq1')
-      break;
-    case 'maq2':
-      saveData(packet.payload.toString('utf-8'), 'maq2')
-      break;
-    case 'maq3':
-      saveData(packet.payload.toString('utf-8'), 'maq3')
-      break;
-  }
+  //console.log('Topico:', topic, ' - Dados: ', packet.payload.toString('utf-8'))
+  saveData(packet.payload.toString('utf-8'), await getIdMaquina(topic), topic)
 })
 
-async function saveData(val, idMaquina) {
-  //
+getNormalizeDate = async () => {
+  var date = new Date()
+  var userTimezoneOffset = date.getTimezoneOffset() * 60000
+  date = new Date(date.getTime() - userTimezoneOffset)   
+  return date
+}
+
+publishMetadata = (topic, metaData) => {
+  try {
+    //console.log('topic: ', topic, ' - metaData: ', metaData)
+    client.publish(topic, metaData);
+  } catch (error) {
+    console.log('Error Broker (publishMetadata) : ', error);
+    return false
+  }
+  return true
+}
+
+getIdMaquina = async (topico) => {
+  try {
+      //
+      let idmaquina = 0
+      await sql.connect(sql_config)
+      const result = await sql.query`select id from maquina where topico = ${topico}`
+      objKeysMap = Object.keys(result).map((k) => result[k])
+      objKeysMap.forEach(element => {
+        if (element && element[0] && element[0].id) {
+          idmaquina = element[0].id
+        }
+      })
+      return idmaquina
+  } catch (err) {
+      // ... error checks
+      console.log('Error: ', err)
+  }
+}
+
+async function saveData(val, idMaquina, topico) {
   try {
     //
     /* 
-    Se status = 0, então máquina parada
-    Se status = 1, então máquina rodando
-    Se status = 2, Salva dados de processo no banco
-    Se status = 3, então máquina falha   
+    Se status = 0, máquina parada
+    Se status = 1, máquina rodando
+    Se status = 2, Salva dados
+    Se status = 3, máquina falha   
     */
-    let jsonData = JSON.parse(val.replace('maq1', ''))
     //
+    let jsonData = JSON.parse(val.replace('maq1', ''))
+    //let jsonData2 = JSON.parse(val.replace(topico, ''))
+    //console.log(jsonData)
+    //
+    let strSql = ''
     let pool = await sql.connect(sql_config)
     const request = pool.request()
-
-    //console.log('etste: ', )
-    var nDate = new Date().toLocaleString({ timeZone: 'America/Sao_Paulo' })
-    //
-    request.input('Id_Maquina', sql.Int, 1)
-    request.input('DataHora', sql.DateTime, await getNormalizeDate())    
-    request.input('Kilos', sql.VarChar, jsonData.MQTT_PRODUCAO_ROUPA)
-    request.input('Programa', sql.VarChar, jsonData.MQTT_PROGRAMA_EXECUTADO)
-    request.input('NumeroCiclo', sql.VarChar, jsonData.MQTT_NUMERO_DE_CICLOS)
-    request.input('Temperatura', sql.VarChar, jsonData.MQTT_TEMPERATURA)
-    request.input('Status', sql.VarChar, jsonData.MQTT_STATUS)
-    request.input('Consumo', sql.VarChar, jsonData.MQTT_CONSUMO)
-    request.input('TempoTrabalhando', sql.VarChar, jsonData.MQTT_TEMPO_MAQUINA_TRABALHANDO)
-    request.input('TempoParada', sql.VarChar, jsonData.MQTT_TEMPO_MAQUINA_PARADA)
-    request.input('TempoFalha', sql.VarChar, jsonData.MQTT_TEMPO_MAQUINA_FALHA)
-    request.input('TempoReserva1', sql.VarChar, jsonData.MQTT_TEMPO_MAQUINA_RESERVA1)
-    request.input('TempoReserva2', sql.VarChar, jsonData.MQTT_TEMPO_MAQUINA_RESERVA2)
-    request.input('TempoReserva3', sql.VarChar, jsonData.MQTT_TEMPO_MAQUINA_RESERVA3)
-    //
-    let strSql = 'insert into MaquinaLog (Id_Maquina, DataHora, Kilos, Programa, NumeroCiclo, Temperatura, Status, Consumo, ' + 
-                 'TempoTrabalhando, TempoParada, TempoFalha, TempoReserva1, TempoReserva2, TempoReserva3) ' + 
-                 'values (@Id_Maquina, @DataHora, @Kilos, @Programa, @NumeroCiclo, @Temperatura, @Status, @Consumo, ' + 
-                 '@TempoTrabalhando, @TempoParada, @TempoFalha, @TempoReserva1, @TempoReserva2, @TempoReserva3);'
-    //
-    request.query(strSql, (err, result) => {
+    //    
+    if (topico === 'consumo') {
+      //
+      request.input('Id_Maquina', sql.Int, idMaquina)
+      request.input('DataHora', sql.DateTime, await getNormalizeDate())
+      request.input('Tempo', sql.VarChar, jsonData.TEMPO)
+      request.input('Passo', sql.VarChar, jsonData.PASSO)
+      request.input('Temperatura', sql.VarChar, jsonData.TEMPE)
+      request.input('Kilos', sql.VarChar, jsonData.KG)
+      request.input('ProgramaExec', sql.VarChar, jsonData.PRG_EXEC)
+      request.input('ProdutoA', sql.VarChar, jsonData.PRA)
+      request.input('ProdutoB', sql.VarChar, jsonData.PRB)
+      request.input('ProdutoC', sql.VarChar, jsonData.PRC)
+      request.input('ProdutoD', sql.VarChar, jsonData.PRD)
+      request.input('ProdutoE', sql.VarChar, jsonData.PRE)
+      request.input('ProdutoF', sql.VarChar, jsonData.PRF)
+      request.input('ProdutoG', sql.VarChar, jsonData.PRG)
+      request.input('RPM', sql.VarChar, jsonData.RPM)
+      //
+      strSql = 'insert into MaquinaLogReport (' + 
+               'Id_Maquina, DataHora, Tempo, Passo, Temperatura, Kilos, ProgramaExec, ProdutoA, ProdutoB, ProdutoC, ProdutoD, ProdutoE, ProdutoF, ProdutoG, RPM) ' + 
+               'values ' + 
+               '(@Id_Maquina, @DataHora, @Tempo, @Passo, @Temperatura, @Kilos, @ProgramaExec, @ProdutoA, @ProdutoB, @ProdutoC, @ProdutoD, @ProdutoE, @ProdutoF, @ProdutoG, @RPM);'
+      //
+      request.query(strSql, (err, result) => {
+      //
+        console.log("Registro inserido - Topico: ", topico);
+      })               
+    }
+    else if (topico === 'maq1' && await checkData(idMaquina, jsonData)) {
+      //
+      request.input('Id_Maquina', sql.Int, idMaquina)
+      request.input('DataHora', sql.DateTime, await getNormalizeDate())    
+      request.input('DataHoraCLP', sql.VarChar, jsonData.DATA)
+      request.input('Consumo', sql.VarChar, jsonData.CONSUMO)
+      request.input('NumeroCiclo', sql.VarChar, jsonData.NUME_CICLOS)
+      request.input('TempoTrabalhando', sql.VarChar, jsonData.TEMPO_MAQ_TRABA)
+      request.input('TempoParada', sql.VarChar, jsonData.TEMPO_MAQ_PARAD)
+      request.input('TempoFalha', sql.VarChar, jsonData.TEMPO_MAQ_FALHA)
+      request.input('Reserva1', sql.VarChar, jsonData.RESERVA1)
+      request.input('Reserva2', sql.VarChar, jsonData.RESERVA2)
+      //
+      strSql = 'insert into maquinalog (' + 
+               'Id_Maquina, DataHora, DataHoraCLP, Consumo, NumeroCiclo, ' + 
+               'TempoTrabalhando, TempoParada, TempoFalha, Reserva1, Reserva2) ' + 
+               'values ( ' + 
+               '@Id_Maquina, @DataHora, @DataHoraCLP, @Consumo, @NumeroCiclo, ' + 
+               '@TempoTrabalhando, @TempoParada, @TempoFalha, @Reserva1, @Reserva2);'
+      //
+      request.query(strSql, (err, result) => {
         //
-       console.log("Registro inserido");
+        console.log("Registro inserido - Topico: ", topico);
+      })
+    }
+    else {
+      console.log('Nao insere')
+    }
+    //      
+    /*
+    request.query(strSql, (err, result) => {
+      //
+      if (topico) {
+        //console.log("Registro inserido - Topico: ", topico);
+      }
+      else {
+        //console.log("Registro inserido");
+      }
+      //
+      //console.log('Erro: ', err)
+      //console.log('Result: ', result)
+      //console.log('##############################################################################')
     })
-    
+    */
+    //
   } catch (err) {
       console.log('SQL Error (saveData) : ', err)
   }
@@ -162,3 +245,35 @@ sql.on('error', err => {
   // ... error handler
   console.log('SQL Error (on) : ', err)
 })
+
+
+async function checkData(id, data) {
+  //var str = 'maq1{"DATA":"2020-05-14T14:59:23.945Z","PRD_ROUPA":"1"}'
+  //
+  let dataMachine = storage.getItem(id)
+  //
+  /*
+  console.log('1 ')
+  console.log('JSON: ', typeof(data))
+  console.log('JSON: ', data)
+  console.log('STORAGE: ', typeof(dataMachine))
+  console.log('STORAGE: ', dataMachine)*/
+  if (dataMachine) {
+    console.log('2 ')
+    if (data.CONSUMO == dataMachine.CONSUMO) {
+      console.log('HAAAAAAAAAAAAA')
+      return false
+    }
+    else {
+      console.log('HEEEEEEEEEEE', dataMachine.CONSUMO, ' - ', data.CONSUMO)
+      return true
+    }
+  }
+  console.log('3 ')
+  storage.setItem(id, data)
+  return true
+}
+
+//console.log('ddddddddd')
+
+//tes()
