@@ -1,0 +1,2 @@
+2020-11-17 19:44:33 - Starting C:\Program Files\nodejs\node.exe  --harmony C:\inetpub\wwwroot\broker\broker-mqtt-sql\node_modules\node-windows\lib\wrapper.js --file C:\inetpub\wwwroot\broker\broker-mqtt-sql\index.js --scriptoptions= --log "AppWeb wrapper" --grow 0.25 --wait 1 --maxrestarts 3 --abortonerror n --stopparentfirst undefined
+2020-11-17 19:44:40 - Started 5884

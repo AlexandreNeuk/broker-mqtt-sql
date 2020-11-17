@@ -24,7 +24,7 @@ var client = mqtt.connect(mqtt_options)
 
 const sql_config = {
   user: 'sa',
-  password: '12345678',
+  password: 'sqladmin',
   server: 'localhost',
   database: 'inequil',
   "options": {
