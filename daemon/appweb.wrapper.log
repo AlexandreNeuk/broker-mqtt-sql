@@ -18,3 +18,87 @@ Stacktrace:   em System.Runtime.InteropServices.Marshal.ThrowExceptionForHRInter
 2020-11-17 20:03:47 - Started 5580
 2020-11-18 08:24:39 - Starting C:\Program Files\nodejs\node.exe  --harmony C:\inetpub\wwwroot\broker\broker-mqtt-sql\node_modules\node-windows\lib\wrapper.js --file C:\inetpub\wwwroot\broker\broker-mqtt-sql\index.js --scriptoptions= --log "AppWeb wrapper" --grow 0.25 --wait 1 --maxrestarts 3 --abortonerror n --stopparentfirst undefined
 2020-11-18 08:24:40 - Started 4204
+2020-11-18 10:43:52 - Stopping appweb.exe
+2020-11-18 10:43:52 - ProcessKill 4204
+2020-11-18 10:43:52 - Found child process: 4216 Name: conhost.exe
+2020-11-18 10:43:52 - Found child process: 4584 Name: node.exe
+2020-11-18 10:43:52 - Stopping process 4216
+2020-11-18 10:43:53 - Send SIGINT 4216
+2020-11-18 10:43:53 - SIGINT to 4216 failed - Killing as fallback
+2020-11-18 10:43:53 - Stopping process 4584
+2020-11-18 10:43:53 - Send SIGINT 4584
+2020-11-18 10:43:53 - SIGINT to 4584 failed - Killing as fallback
+2020-11-18 10:43:53 - Stopping process 4204
+2020-11-18 10:43:53 - Send SIGINT 4204
+2020-11-18 10:43:53 - SIGINT to 4204 failed - Killing as fallback
+2020-11-18 10:43:53 - Finished appweb.exe
+2020-11-18 10:43:56 - Starting C:\Program Files\nodejs\node.exe  --harmony C:\inetpub\wwwroot\broker\broker-mqtt-sql\node_modules\node-windows\lib\wrapper.js --file C:\inetpub\wwwroot\broker\broker-mqtt-sql\index.js --scriptoptions= --log "AppWeb wrapper" --grow 0.25 --wait 1 --maxrestarts 3 --abortonerror n --stopparentfirst undefined
+2020-11-18 10:43:57 - Started 1900
+2020-11-18 10:44:28 - Starting C:\Program Files\nodejs\node.exe  --harmony C:\inetpub\wwwroot\broker\broker-mqtt-sql\node_modules\node-windows\lib\wrapper.js --file C:\inetpub\wwwroot\broker\broker-mqtt-sql\index.js --scriptoptions= --log "AppWeb wrapper" --grow 0.25 --wait 1 --maxrestarts 3 --abortonerror n --stopparentfirst undefined
+2020-11-18 10:44:28 - Started 5292
+2020-11-18 10:46:53 - Starting C:\Program Files\nodejs\node.exe  --harmony C:\inetpub\wwwroot\broker\broker-mqtt-sql\node_modules\node-windows\lib\wrapper.js --file C:\inetpub\wwwroot\broker\broker-mqtt-sql\index.js --scriptoptions= --log "AppWeb wrapper" --grow 0.25 --wait 1 --maxrestarts 3 --abortonerror n --stopparentfirst undefined
+2020-11-18 10:46:53 - Started 1196
+2020-11-18 10:56:41 - Stopping appweb.exe
+2020-11-18 10:56:41 - ProcessKill 1196
+2020-11-18 10:56:41 - Found child process: 1900 Name: conhost.exe
+2020-11-18 10:56:41 - Found child process: 6696 Name: node.exe
+2020-11-18 10:56:41 - Stopping process 1900
+2020-11-18 10:56:41 - Send SIGINT 1900
+2020-11-18 10:56:41 - SIGINT to 1900 failed - Killing as fallback
+2020-11-18 10:56:41 - Stopping process 6696
+2020-11-18 10:56:41 - Send SIGINT 6696
+2020-11-18 10:56:41 - SIGINT to 6696 failed - Killing as fallback
+2020-11-18 10:56:41 - Stopping process 1196
+2020-11-18 10:56:41 - Send SIGINT 1196
+2020-11-18 10:56:41 - SIGINT to 1196 failed - Killing as fallback
+2020-11-18 10:56:41 - Finished appweb.exe
+2020-11-18 10:56:53 - Starting C:\Program Files\nodejs\node.exe  --harmony C:\inetpub\wwwroot\broker\broker-mqtt-sql\node_modules\node-windows\lib\wrapper.js --file C:\inetpub\wwwroot\broker\broker-mqtt-sql\index.js --scriptoptions= --log "AppWeb wrapper" --grow 0.25 --wait 1 --maxrestarts 3 --abortonerror n --stopparentfirst undefined
+2020-11-18 10:56:53 - Started 7304
+2020-11-18 10:58:26 - Stopping appweb.exe
+2020-11-18 10:58:26 - ProcessKill 7304
+2020-11-18 10:58:26 - Found child process: 7452 Name: conhost.exe
+2020-11-18 10:58:26 - Found child process: 5152 Name: node.exe
+2020-11-18 10:58:26 - Stopping process 7452
+2020-11-18 10:58:26 - Send SIGINT 7452
+2020-11-18 10:58:26 - SIGINT to 7452 failed - Killing as fallback
+2020-11-18 10:58:26 - Stopping process 5152
+2020-11-18 10:58:26 - Send SIGINT 5152
+2020-11-18 10:58:26 - SIGINT to 5152 failed - Killing as fallback
+2020-11-18 10:58:26 - Stopping process 7304
+2020-11-18 10:58:26 - Send SIGINT 7304
+2020-11-18 10:58:26 - SIGINT to 7304 failed - Killing as fallback
+2020-11-18 10:58:26 - Finished appweb.exe
+2020-11-18 10:58:29 - Starting C:\Program Files\nodejs\node.exe  --harmony C:\inetpub\wwwroot\broker\broker-mqtt-sql\node_modules\node-windows\lib\wrapper.js --file C:\inetpub\wwwroot\broker\broker-mqtt-sql\index.js --scriptoptions= --log "AppWeb wrapper" --grow 0.25 --wait 1 --maxrestarts 3 --abortonerror n --stopparentfirst undefined
+2020-11-18 10:58:29 - Started 4872
+2020-11-18 11:00:01 - Stopping appweb.exe
+2020-11-18 11:00:01 - ProcessKill 4872
+2020-11-18 11:00:01 - Found child process: 6356 Name: conhost.exe
+2020-11-18 11:00:01 - Found child process: 4900 Name: node.exe
+2020-11-18 11:00:01 - Stopping process 6356
+2020-11-18 11:00:01 - Send SIGINT 6356
+2020-11-18 11:00:01 - SIGINT to 6356 failed - Killing as fallback
+2020-11-18 11:00:01 - Stopping process 4900
+2020-11-18 11:00:01 - Send SIGINT 4900
+2020-11-18 11:00:01 - SIGINT to 4900 failed - Killing as fallback
+2020-11-18 11:00:01 - Stopping process 4872
+2020-11-18 11:00:01 - Send SIGINT 4872
+2020-11-18 11:00:01 - SIGINT to 4872 failed - Killing as fallback
+2020-11-18 11:00:01 - Finished appweb.exe
+2020-11-18 11:12:00 - Starting C:\Program Files\nodejs\node.exe  --harmony C:\inetpub\wwwroot\broker\broker-mqtt-sql\node_modules\node-windows\lib\wrapper.js --file C:\inetpub\wwwroot\broker\broker-mqtt-sql\index.js --scriptoptions= --log "AppWeb wrapper" --grow 0.25 --wait 1 --maxrestarts 3 --abortonerror n --stopparentfirst undefined
+2020-11-18 11:12:06 - Started 5948
+2020-11-18 11:16:56 - Stopping appweb.exe
+2020-11-18 11:16:56 - ProcessKill 5948
+2020-11-18 11:16:57 - Found child process: 5956 Name: conhost.exe
+2020-11-18 11:16:57 - Found child process: 6396 Name: node.exe
+2020-11-18 11:16:57 - Stopping process 5956
+2020-11-18 11:16:57 - Send SIGINT 5956
+2020-11-18 11:16:57 - SIGINT to 5956 failed - Killing as fallback
+2020-11-18 11:16:57 - Stopping process 6396
+2020-11-18 11:16:57 - Send SIGINT 6396
+2020-11-18 11:16:57 - SIGINT to 6396 failed - Killing as fallback
+2020-11-18 11:16:57 - Stopping process 5948
+2020-11-18 11:16:57 - Send SIGINT 5948
+2020-11-18 11:16:57 - SIGINT to 5948 failed - Killing as fallback
+2020-11-18 11:16:57 - Finished appweb.exe
+2020-11-18 11:16:59 - Starting C:\Program Files\nodejs\node.exe  --harmony C:\inetpub\wwwroot\broker\broker-mqtt-sql\node_modules\node-windows\lib\wrapper.js --file C:\inetpub\wwwroot\broker\broker-mqtt-sql\index.js --scriptoptions= --log "AppWeb wrapper" --grow 0.25 --wait 1 --maxrestarts 3 --abortonerror n --stopparentfirst undefined
+2020-11-18 11:16:59 - Started 3824

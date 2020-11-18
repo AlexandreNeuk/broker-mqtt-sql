@@ -23,36 +23,45 @@ const mqtt_options = {
 var client = mqtt.connect(mqtt_options)
 
 const sql_config = {
-  user: 'inequil',
-  password: 'inequil#2020',
+  user: 'sa',
+  password: 'sqladmin',
   server: 'localhost',
   database: 'inequil',
   "options": {
     "encrypt": true,
-    "enableArithAbort": true
+    "enableArithAbort": true,
+     cryptoCredentialsDetails: {
+            minVersion: 'TLSv1'
+        }
     }
 }
 
 app.get('/', function (req, res) {
   //
-  res.send('Broker version 3.1')
+  res.send('Broker version 3.1.3')
 })
 
-app.get('/databasetest', function (req, res) {
+app.get('/databasetest', async function (req, res) {
   //
   try {
       //
-      let idmaquina = 0
-      await sql.connect(sql_config)
-      const result = await sql.query`select top(1) id_coletortopico from coletortopicolog`
-      objKeysMap = Object.keys(result).map((k) => result[k])
-      objKeysMap.forEach(element => {
-        if (element && element[0] && element[0].id_coletortopico) {
-          res.send('Database access OK - ', element[0].id_coletortopico)
+      console.log('1')
+      let pool = await sql.connect(sql_config)
+      console.log('2')
+      const request = pool.request()
+      console.log('3')
+      request.query("select top 1 id from maquina", (err, result) => {
+        //
+        console.log('4')
+        if (err) {
+           res.status(200).send('Database error (1): ', err)
         }
-      })
+        else {
+           res.status(200).send('Database OK')
+        }
+      }) 
   } catch (err) {
-      res.send('Database error: ', err)
+      res.status(200).send('Database error (2): ' + err)
   }
 })
 

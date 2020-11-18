@@ -1,0 +1,121 @@
+C:\inetpub\wwwroot\broker\broker-mqtt-sql\index.js:46
+      await sql.connect(sql_config)
+      ^^^^^
+
+SyntaxError: await is only valid in async function
+    at wrapSafe (internal/modules/cjs/loader.js:979:16)
+    at Module._compile (internal/modules/cjs/loader.js:1027:27)
+    at Object.Module._extensions..js (internal/modules/cjs/loader.js:1092:10)
+    at Module.load (internal/modules/cjs/loader.js:928:32)
+    at Function.Module._load (internal/modules/cjs/loader.js:769:14)
+    at Function.executeUserEntryPoint [as runMain] (internal/modules/run_main.js:72:12)
+    at internal/main/run_main_module.js:17:47
+C:\inetpub\wwwroot\broker\broker-mqtt-sql\index.js:46
+      await sql.connect(sql_config)
+      ^^^^^
+
+SyntaxError: await is only valid in async function
+    at wrapSafe (internal/modules/cjs/loader.js:979:16)
+    at Module._compile (internal/modules/cjs/loader.js:1027:27)
+    at Object.Module._extensions..js (internal/modules/cjs/loader.js:1092:10)
+    at Module.load (internal/modules/cjs/loader.js:928:32)
+    at Function.Module._load (internal/modules/cjs/loader.js:769:14)
+    at Function.executeUserEntryPoint [as runMain] (internal/modules/run_main.js:72:12)
+    at internal/main/run_main_module.js:17:47
+C:\inetpub\wwwroot\broker\broker-mqtt-sql\index.js:46
+      await sql.connect(sql_config)
+      ^^^^^
+
+SyntaxError: await is only valid in async function
+    at wrapSafe (internal/modules/cjs/loader.js:979:16)
+    at Module._compile (internal/modules/cjs/loader.js:1027:27)
+    at Object.Module._extensions..js (internal/modules/cjs/loader.js:1092:10)
+    at Module.load (internal/modules/cjs/loader.js:928:32)
+    at Function.Module._load (internal/modules/cjs/loader.js:769:14)
+    at Function.executeUserEntryPoint [as runMain] (internal/modules/run_main.js:72:12)
+    at internal/main/run_main_module.js:17:47
+C:\inetpub\wwwroot\broker\broker-mqtt-sql\index.js:46
+      await sql.connect(sql_config)
+      ^^^^^
+
+SyntaxError: await is only valid in async function
+    at wrapSafe (internal/modules/cjs/loader.js:979:16)
+    at Module._compile (internal/modules/cjs/loader.js:1027:27)
+    at Object.Module._extensions..js (internal/modules/cjs/loader.js:1092:10)
+    at Module.load (internal/modules/cjs/loader.js:928:32)
+    at Function.Module._load (internal/modules/cjs/loader.js:769:14)
+    at Function.executeUserEntryPoint [as runMain] (internal/modules/run_main.js:72:12)
+    at internal/main/run_main_module.js:17:47
+C:\inetpub\wwwroot\broker\broker-mqtt-sql\index.js:46
+      await sql.connect(sql_config)
+      ^^^^^
+
+SyntaxError: await is only valid in async function
+    at wrapSafe (internal/modules/cjs/loader.js:979:16)
+    at Module._compile (internal/modules/cjs/loader.js:1027:27)
+    at Object.Module._extensions..js (internal/modules/cjs/loader.js:1092:10)
+    at Module.load (internal/modules/cjs/loader.js:928:32)
+    at Function.Module._load (internal/modules/cjs/loader.js:769:14)
+    at Function.executeUserEntryPoint [as runMain] (internal/modules/run_main.js:72:12)
+    at internal/main/run_main_module.js:17:47
+C:\inetpub\wwwroot\broker\broker-mqtt-sql\index.js:46
+      await sql.connect(sql_config)
+      ^^^^^
+
+SyntaxError: await is only valid in async function
+    at wrapSafe (internal/modules/cjs/loader.js:979:16)
+    at Module._compile (internal/modules/cjs/loader.js:1027:27)
+    at Object.Module._extensions..js (internal/modules/cjs/loader.js:1092:10)
+    at Module.load (internal/modules/cjs/loader.js:928:32)
+    at Function.Module._load (internal/modules/cjs/loader.js:769:14)
+    at Function.executeUserEntryPoint [as runMain] (internal/modules/run_main.js:72:12)
+    at internal/main/run_main_module.js:17:47
+Wed, 18 Nov 2020 13:47:10 GMT express deprecated res.send(status, body): Use res.status(status).send(body) instead at index.js:55:11
+(node:6696) UnhandledPromiseRejectionWarning: RangeError [ERR_HTTP_INVALID_STATUS_CODE]: Invalid status code: Database error: 
+    at ServerResponse.writeHead (_http_server.js:255:11)
+    at ServerResponse._implicitHeader (_http_server.js:246:8)
+    at write_ (_http_outgoing.js:685:9)
+    at ServerResponse.end (_http_outgoing.js:798:5)
+    at ServerResponse.send (C:\inetpub\wwwroot\broker\broker-mqtt-sql\node_modules\express\lib\response.js:221:10)
+    at ServerResponse.json (C:\inetpub\wwwroot\broker\broker-mqtt-sql\node_modules\express\lib\response.js:267:15)
+    at ServerResponse.send (C:\inetpub\wwwroot\broker\broker-mqtt-sql\node_modules\express\lib\response.js:158:21)
+    at C:\inetpub\wwwroot\broker\broker-mqtt-sql\index.js:55:11
+(Use `node --trace-warnings ...` to show where the warning was created)
+(node:6696) UnhandledPromiseRejectionWarning: Unhandled promise rejection. This error originated either by throwing inside of an async function without a catch block, or by rejecting a promise which was not handled with .catch(). To terminate the node process on unhandled promise rejection, use the CLI flag `--unhandled-rejections=strict` (see https://nodejs.org/api/cli.html#cli_unhandled_rejections_mode). (rejection id: 2)
+(node:6696) [DEP0018] DeprecationWarning: Unhandled promise rejections are deprecated. In the future, promise rejections that are not handled will terminate the Node.js process with a non-zero exit code.
+Wed, 18 Nov 2020 13:56:59 GMT express deprecated res.send(status, body): Use res.status(status).send(body) instead at index.js:57:11
+(node:5152) UnhandledPromiseRejectionWarning: RangeError [ERR_HTTP_INVALID_STATUS_CODE]: Invalid status code: Database error (2): 
+    at ServerResponse.writeHead (_http_server.js:255:11)
+    at ServerResponse._implicitHeader (_http_server.js:246:8)
+    at write_ (_http_outgoing.js:685:9)
+    at ServerResponse.end (_http_outgoing.js:798:5)
+    at ServerResponse.send (C:\inetpub\wwwroot\broker\broker-mqtt-sql\node_modules\express\lib\response.js:221:10)
+    at ServerResponse.json (C:\inetpub\wwwroot\broker\broker-mqtt-sql\node_modules\express\lib\response.js:267:15)
+    at ServerResponse.send (C:\inetpub\wwwroot\broker\broker-mqtt-sql\node_modules\express\lib\response.js:158:21)
+    at C:\inetpub\wwwroot\broker\broker-mqtt-sql\index.js:57:11
+(Use `node --trace-warnings ...` to show where the warning was created)
+(node:5152) UnhandledPromiseRejectionWarning: Unhandled promise rejection. This error originated either by throwing inside of an async function without a catch block, or by rejecting a promise which was not handled with .catch(). To terminate the node process on unhandled promise rejection, use the CLI flag `--unhandled-rejections=strict` (see https://nodejs.org/api/cli.html#cli_unhandled_rejections_mode). (rejection id: 2)
+(node:5152) [DEP0018] DeprecationWarning: Unhandled promise rejections are deprecated. In the future, promise rejections that are not handled will terminate the Node.js process with a non-zero exit code.
+Wed, 18 Nov 2020 13:58:30 GMT express deprecated res.send(status, body): Use res.status(status).send(body) instead at index.js:57:11
+(node:4900) UnhandledPromiseRejectionWarning: RangeError [ERR_HTTP_INVALID_STATUS_CODE]: Invalid status code: Database error (2): 
+    at ServerResponse.writeHead (_http_server.js:255:11)
+    at ServerResponse._implicitHeader (_http_server.js:246:8)
+    at write_ (_http_outgoing.js:685:9)
+    at ServerResponse.end (_http_outgoing.js:798:5)
+    at ServerResponse.send (C:\inetpub\wwwroot\broker\broker-mqtt-sql\node_modules\express\lib\response.js:221:10)
+    at ServerResponse.json (C:\inetpub\wwwroot\broker\broker-mqtt-sql\node_modules\express\lib\response.js:267:15)
+    at ServerResponse.send (C:\inetpub\wwwroot\broker\broker-mqtt-sql\node_modules\express\lib\response.js:158:21)
+    at C:\inetpub\wwwroot\broker\broker-mqtt-sql\index.js:57:11
+(Use `node --trace-warnings ...` to show where the warning was created)
+(node:4900) UnhandledPromiseRejectionWarning: Unhandled promise rejection. This error originated either by throwing inside of an async function without a catch block, or by rejecting a promise which was not handled with .catch(). To terminate the node process on unhandled promise rejection, use the CLI flag `--unhandled-rejections=strict` (see https://nodejs.org/api/cli.html#cli_unhandled_rejections_mode). (rejection id: 2)
+(node:4900) [DEP0018] DeprecationWarning: Unhandled promise rejections are deprecated. In the future, promise rejections that are not handled will terminate the Node.js process with a non-zero exit code.
+(node:4900) UnhandledPromiseRejectionWarning: RangeError [ERR_HTTP_INVALID_STATUS_CODE]: Invalid status code: Database error (2): 
+    at ServerResponse.writeHead (_http_server.js:255:11)
+    at ServerResponse._implicitHeader (_http_server.js:246:8)
+    at write_ (_http_outgoing.js:685:9)
+    at ServerResponse.end (_http_outgoing.js:798:5)
+    at ServerResponse.send (C:\inetpub\wwwroot\broker\broker-mqtt-sql\node_modules\express\lib\response.js:221:10)
+    at ServerResponse.json (C:\inetpub\wwwroot\broker\broker-mqtt-sql\node_modules\express\lib\response.js:267:15)
+    at ServerResponse.send (C:\inetpub\wwwroot\broker\broker-mqtt-sql\node_modules\express\lib\response.js:158:21)
+    at C:\inetpub\wwwroot\broker\broker-mqtt-sql\index.js:57:11
+(node:4900) UnhandledPromiseRejectionWarning: Unhandled promise rejection. This error originated either by throwing inside of an async function without a catch block, or by rejecting a promise which was not handled with .catch(). To terminate the node process on unhandled promise rejection, use the CLI flag `--unhandled-rejections=strict` (see https://nodejs.org/api/cli.html#cli_unhandled_rejections_mode). (rejection id: 4)
