@@ -102,3 +102,35 @@ Stacktrace:   em System.Runtime.InteropServices.Marshal.ThrowExceptionForHRInter
 2020-11-18 11:16:57 - Finished appweb.exe
 2020-11-18 11:16:59 - Starting C:\Program Files\nodejs\node.exe  --harmony C:\inetpub\wwwroot\broker\broker-mqtt-sql\node_modules\node-windows\lib\wrapper.js --file C:\inetpub\wwwroot\broker\broker-mqtt-sql\index.js --scriptoptions= --log "AppWeb wrapper" --grow 0.25 --wait 1 --maxrestarts 3 --abortonerror n --stopparentfirst undefined
 2020-11-18 11:16:59 - Started 3824
+2020-11-18 11:38:54 - Stopping appweb.exe
+2020-11-18 11:38:54 - ProcessKill 3824
+2020-11-18 11:38:54 - Found child process: 1468 Name: conhost.exe
+2020-11-18 11:38:54 - Found child process: 3700 Name: node.exe
+2020-11-18 11:38:55 - Stopping process 1468
+2020-11-18 11:38:55 - Send SIGINT 1468
+2020-11-18 11:38:55 - SIGINT to 1468 failed - Killing as fallback
+2020-11-18 11:38:55 - Stopping process 3700
+2020-11-18 11:38:55 - Send SIGINT 3700
+2020-11-18 11:38:55 - SIGINT to 3700 failed - Killing as fallback
+2020-11-18 11:38:55 - Stopping process 3824
+2020-11-18 11:38:55 - Send SIGINT 3824
+2020-11-18 11:38:55 - SIGINT to 3824 failed - Killing as fallback
+2020-11-18 11:38:55 - Finished appweb.exe
+2020-11-18 11:38:57 - Starting C:\Program Files\nodejs\node.exe  --harmony C:\inetpub\wwwroot\broker\broker-mqtt-sql\node_modules\node-windows\lib\wrapper.js --file C:\inetpub\wwwroot\broker\broker-mqtt-sql\index.js --scriptoptions= --log "AppWeb wrapper" --grow 0.25 --wait 1 --maxrestarts 3 --abortonerror n --stopparentfirst undefined
+2020-11-18 11:38:58 - Started 3768
+2020-11-18 11:55:50 - Stopping appweb.exe
+2020-11-18 11:55:50 - ProcessKill 3768
+2020-11-18 11:56:02 - Shutdown exception
+Message:O sistema está sendo desligado.
+
+Stacktrace:   em System.Runtime.InteropServices.Marshal.ThrowExceptionForHRInternal(Int32 errorCode, IntPtr errorInfo)
+   em System.Management.ManagementScope.InitializeGuts(Object o)
+   em System.Management.ManagementScope.Initialize()
+   em System.Management.ManagementObjectSearcher.Initialize()
+   em System.Management.ManagementObjectSearcher.Get()
+   em winsw.WrapperService.GetChildPids(Int32 pid)
+   em winsw.WrapperService.StopProcessAndChildren(Int32 pid)
+   em winsw.WrapperService.StopIt()
+   em winsw.WrapperService.OnShutdown()
+2020-11-18 11:56:56 - Starting C:\Program Files\nodejs\node.exe  --harmony C:\inetpub\wwwroot\broker\broker-mqtt-sql\node_modules\node-windows\lib\wrapper.js --file C:\inetpub\wwwroot\broker\broker-mqtt-sql\index.js --scriptoptions= --log "AppWeb wrapper" --grow 0.25 --wait 1 --maxrestarts 3 --abortonerror n --stopparentfirst undefined
+2020-11-18 11:56:56 - Started 3820

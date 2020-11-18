@@ -23,8 +23,8 @@ const mqtt_options = {
 var client = mqtt.connect(mqtt_options)
 
 const sql_config = {
-  user: 'sa',
-  password: 'sqladmin',
+  user: 'inequil',
+  password: 'inequil#2020',
   server: 'localhost',
   database: 'inequil',
   "options": {
@@ -38,7 +38,7 @@ const sql_config = {
 
 app.get('/', function (req, res) {
   //
-  res.send('Broker version 3.1.3')
+  res.send('Broker version 3.1.4')
 })
 
 app.get('/databasetest', async function (req, res) {
