@@ -1,2 +1,20 @@
 2020-11-17 19:44:33 - Starting C:\Program Files\nodejs\node.exe  --harmony C:\inetpub\wwwroot\broker\broker-mqtt-sql\node_modules\node-windows\lib\wrapper.js --file C:\inetpub\wwwroot\broker\broker-mqtt-sql\index.js --scriptoptions= --log "AppWeb wrapper" --grow 0.25 --wait 1 --maxrestarts 3 --abortonerror n --stopparentfirst undefined
 2020-11-17 19:44:40 - Started 5884
+2020-11-17 20:02:15 - Stopping appweb.exe
+2020-11-17 20:02:15 - ProcessKill 5884
+2020-11-17 20:02:17 - Shutdown exception
+Message:O sistema está sendo desligado.
+
+Stacktrace:   em System.Runtime.InteropServices.Marshal.ThrowExceptionForHRInternal(Int32 errorCode, IntPtr errorInfo)
+   em System.Management.ManagementScope.InitializeGuts(Object o)
+   em System.Management.ManagementScope.Initialize()
+   em System.Management.ManagementObjectSearcher.Initialize()
+   em System.Management.ManagementObjectSearcher.Get()
+   em winsw.WrapperService.GetChildPids(Int32 pid)
+   em winsw.WrapperService.StopProcessAndChildren(Int32 pid)
+   em winsw.WrapperService.StopIt()
+   em winsw.WrapperService.OnShutdown()
+2020-11-17 20:03:37 - Starting C:\Program Files\nodejs\node.exe  --harmony C:\inetpub\wwwroot\broker\broker-mqtt-sql\node_modules\node-windows\lib\wrapper.js --file C:\inetpub\wwwroot\broker\broker-mqtt-sql\index.js --scriptoptions= --log "AppWeb wrapper" --grow 0.25 --wait 1 --maxrestarts 3 --abortonerror n --stopparentfirst undefined
+2020-11-17 20:03:47 - Started 5580
+2020-11-18 08:24:39 - Starting C:\Program Files\nodejs\node.exe  --harmony C:\inetpub\wwwroot\broker\broker-mqtt-sql\node_modules\node-windows\lib\wrapper.js --file C:\inetpub\wwwroot\broker\broker-mqtt-sql\index.js --scriptoptions= --log "AppWeb wrapper" --grow 0.25 --wait 1 --maxrestarts 3 --abortonerror n --stopparentfirst undefined
+2020-11-18 08:24:40 - Started 4204

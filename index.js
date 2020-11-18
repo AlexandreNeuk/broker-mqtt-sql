@@ -35,7 +35,25 @@ const sql_config = {
 
 app.get('/', function (req, res) {
   //
-  res.send('Broker version 1.1')
+  res.send('Broker version 3.1')
+})
+
+app.get('/databasetest', function (req, res) {
+  //
+  try {
+      //
+      let idmaquina = 0
+      await sql.connect(sql_config)
+      const result = await sql.query`select top(1) id_coletortopico from coletortopicolog`
+      objKeysMap = Object.keys(result).map((k) => result[k])
+      objKeysMap.forEach(element => {
+        if (element && element[0] && element[0].id_coletortopico) {
+          res.send('Database access OK - ', element[0].id_coletortopico)
+        }
+      })
+  } catch (err) {
+      res.send('Database error: ', err)
+  }
 })
 
 app.post('/carregar', function (req, res) {
