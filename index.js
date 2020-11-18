@@ -23,8 +23,8 @@ const mqtt_options = {
 var client = mqtt.connect(mqtt_options)
 
 const sql_config = {
-  user: 'sa',
-  password: 'sqladmin',
+  user: 'inequil',
+  password: 'inequil#2020',
   server: 'localhost',
   database: 'inequil',
   "options": {
@@ -104,7 +104,6 @@ client.subscribe('consumo')
 
 client.on('message', async function(topic, message, packet) {
   //
-  //console.log('Topico:', topic, ' - Dados: ', packet.payload.toString('utf-8'))
   saveData(packet.payload.toString('utf-8'), await getIdMaquina(topic), topic)
 })
 
@@ -156,8 +155,6 @@ async function saveData(val, idMaquina, topico) {
     */
     //
     let jsonData = JSON.parse(val.replace('maq1', ''))
-    //let jsonData2 = JSON.parse(val.replace(topico, ''))
-    //console.log(jsonData)
     //
     let strSql = ''
     let pool = await sql.connect(sql_config)
@@ -219,22 +216,6 @@ async function saveData(val, idMaquina, topico) {
     else {
       console.log('Nao insere')
     }
-    //      
-    /*
-    request.query(strSql, (err, result) => {
-      //
-      if (topico) {
-        //console.log("Registro inserido - Topico: ", topico);
-      }
-      else {
-        //console.log("Registro inserido");
-      }
-      //
-      //console.log('Erro: ', err)
-      //console.log('Result: ', result)
-      //console.log('##############################################################################')
-    })
-    */
     //
   } catch (err) {
       console.log('SQL Error (saveData) : ', err)
@@ -247,33 +228,28 @@ sql.on('error', err => {
 })
 
 
-async function checkData(id, data) {
-  //var str = 'maq1{"DATA":"2020-05-14T14:59:23.945Z","PRD_ROUPA":"1"}'
+async function checkData(id, data) { 
   //
   let dataMachine = storage.getItem(id)
   //
   /*
+  //var str = 'maq1{"DATA":"2020-05-14T14:59:23.945Z","PRD_ROUPA":"1"}'
   console.log('1 ')
   console.log('JSON: ', typeof(data))
   console.log('JSON: ', data)
   console.log('STORAGE: ', typeof(dataMachine))
-  console.log('STORAGE: ', dataMachine)*/
+  console.log('STORAGE: ', dataMachine)
+  */ 
+  //
   if (dataMachine) {
-    console.log('2 ')
     if (data.CONSUMO == dataMachine.CONSUMO) {
-      console.log('HAAAAAAAAAAAAA')
       return false
     }
     else {
-      console.log('HEEEEEEEEEEE', dataMachine.CONSUMO, ' - ', data.CONSUMO)
+      console.log('LOG: ', dataMachine.CONSUMO, ' - ', data.CONSUMO)
       return true
     }
   }
-  console.log('3 ')
   storage.setItem(id, data)
   return true
 }
-
-//console.log('ddddddddd')
-
-//tes()
